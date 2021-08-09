@@ -5,7 +5,6 @@ const todoList = document.querySelector(".list-group");
 const taskNum = document.querySelector(".tasknum");
 const clearBtn = document.querySelector(".clearbtn");
 const deadline = document.querySelector(".deadline");
-let tasks = document.querySelectorAll(".list-group-item");
 let dateArr = [];
 
 showTasks();
@@ -100,16 +99,18 @@ function showTasks() {
 };
 
 function deleteTask(index) {
-  let getLocalStorage = localStorage.getItem("key");
-  let getLocalStorage2 = localStorage.getItem("key2");
-  listArr = JSON.parse(getLocalStorage);
-  dateArr = JSON.parse(getLocalStorage2);
-  listArr.splice(index, 1);
-  dateArr.splice(index, 1);
-  localStorage.setItem("key", JSON.stringify(listArr));
-  localStorage.setItem("key2", JSON.stringify(dateArr));
-  showTasks();
-  taskDue();
+  if(confirm("Are you sure you want to delete this task?")){
+    let getLocalStorage = localStorage.getItem("key");
+    let getLocalStorage2 = localStorage.getItem("key2");
+    listArr = JSON.parse(getLocalStorage);
+    dateArr = JSON.parse(getLocalStorage2);
+    listArr.splice(index, 1);
+    dateArr.splice(index, 1);
+    localStorage.setItem("key", JSON.stringify(listArr));
+    localStorage.setItem("key2", JSON.stringify(dateArr));
+    showTasks();
+    taskDue();
+  }
 };
 
 clearBtn.onclick = () => {
@@ -123,3 +124,4 @@ clearBtn.onclick = () => {
   showTasks();
   taskDue();
 };
+
