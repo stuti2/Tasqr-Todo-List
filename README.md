@@ -1,4 +1,4 @@
-# Tasqr 📝
+# Tasqr: Todo List📝
 A to-do list website to keep track and manage all your tasks. It provides you with a calendar for setting the deadline. It includes three different pages, the first one including all the pending to-does, the second one tracks all completed tasks, and the last one tracks all to-does that passed the deadline.
 
 ## Tech-Stack
