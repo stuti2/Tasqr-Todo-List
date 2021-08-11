@@ -58,11 +58,12 @@ function addData() {
   } else {
     if (dueDate == '') {
       alert("Please enter a deadline");
-      return;}
-    // } else if ((a[2] < today.getDate() && a[1] - 1 <= today.getMonth()) || a[1] - 1 < today.getMonth() || a[0] < today.getFullYear()) {
-    //   alert("Please enter a valid due date");
-    //   return;
-    // }
+      return;
+    }
+    else if ((a[2] < today.getDate() && a[1] - 1 <= today.getMonth()) || a[1] - 1 < today.getMonth() || a[0] < today.getFullYear()) {
+      alert("Please enter a valid due date");
+      return;
+    }
     listArr = JSON.parse(getLocalStorage);
     dateArr = JSON.parse(getLocalStorage2);
   }
@@ -95,14 +96,14 @@ function showTasks() {
   let newLi = '';
   listArr.forEach((ele, index) => {
     if (ele.length > 30) {
-      newLi + = `<li class="list-group-item" id='${index}'> ${ele} 
+      newLi += `<li class="list-group-item" id='${index}'> ${ele} 
                   <p>
                     <span class="date"> ${dateArr[index]}</span>
                     <span class="deleteBtn" onclick = "deleteTask(${index})";>  <i class="fas fa-trash">  </i>  </span>
                   </p>
                 </li>`;
     } else {
-      newLi + = `<li class="list-group-item" id='${index}'> ${ele}
+      newLi += `<li class="list-group-item" id='${index}'> ${ele}
                   <span class="date"> ${dateArr[index]}</span>
                   <span class="deleteBtn" onclick = "deleteTask(${index})";>  <i class="fas fa-trash">  </i>  </span>
                 </li>`;
