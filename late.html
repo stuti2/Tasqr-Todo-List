@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="style.css">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Kristi&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fredericka+the+Great&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet">
+  <!-- FontAwesome -->
+  <script src="https://kit.fontawesome.com/148bfd2b6a.js" crossorigin="anonymous"></script>
+  <!-- Icon -->
+  <link rel="icon" href="icons8-pen.png">
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+  <title>Tasqr</title>
+</head>
+
+<body>
+
+  <header>
+    <span class="tasqr">Tasqr</span> <span class="title2">: Todo List</span>
+    <ul class="nav nav-tabs justify-content-end nav-custom">
+      <li class="nav-item">
+        <a class="nav-link"  href="index.html">All</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="complete.html">Completed</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="late.html">Late</a>
+      </li>
+    </ul>
+    <div class="header">
+      <h2>T O D O</h2>
+
+
+      <div class="card">
+        <ul class="list-group list-group-flush" style="max-height: 294px;">
+
+        </ul>
+        <span class="tasks" style="padding-bottom: 19px;"> You have <span class="tasknum"> no </span> pending tasks. </span>
+      </div>
+    </div>
+
+  </header>
+</body>
+<script type="text/javascript">
+  const todoList = document.querySelector(".list-group");
+  const taskNum = document.querySelector(".tasknum");
+  const clearBtn = document.querySelector(".clearbtn");
+  let taskList = [];
+  let date = [];
+  window.onload =function(){
+    taskDue();
+  }
+
+  function taskDue() {
+    let getLocalStorage2 = localStorage.getItem("key2");
+    let getLocalStorage = localStorage.getItem("key");
+    dateArr = JSON.parse(getLocalStorage2);
+    listArr = JSON.parse(getLocalStorage);
+    let today = new Date();
+    let a = '';
+    dateArr.forEach((ele, index) => {
+      a = dateArr[index].split('-');
+      if ((a[0] < today.getDate() && a[1] - 1 <= today.getMonth() && a[2] <= today.getFullYear()) || (a[1] - 1 < today.getMonth() && a[2] <= today.getFullYear()) || a[2] < today.getFullYear()) {
+        taskList.push(listArr[index]);
+        date.push(dateArr[index]);
+      }
+    });
+    showTasks();
+  };
+
+  function showTasks(){
+    if(!taskList.length){
+      document.querySelector(".tasks").innerHTML = 'You have <span class="tasknum"> no </span> pending tasks.';
+    }
+    else if(taskList.length == 1){
+      document.querySelector(".tasks").innerHTML = 'You have <span class="tasknum"> 1 </span> task pending.';
+    }
+    else{
+      taskNum.innerHTML = taskList.length;
+    }
+    let newLi = '';
+    taskList.forEach((ele,index) =>{
+      if(ele.length>30){
+        newLi += `<li class="list-group-item"> ${ele}
+                    <p>
+                      <span class="date"> ${date[index]} </span>
+                      <span class="deleteBtn" onclick = "deleteTask(${index})";> <i class="fas fa-trash"> </i> </span>
+                    </p>
+                  </li>`
+      }
+      else {
+        newLi += `<li class="list-group-item"> ${ele}
+                    <span class="date"> ${date[index]} </span>
+                    <span class="deleteBtn" onclick = "deleteTask(${index})";> <i class="fas fa-trash"> </i> </span>
+                  </li>`
+      }
+
+    });
+    todoList.innerHTML = newLi;
+  };
+
+  function deleteTask(index) {
+    let getLocalStorage = localStorage.getItem("key");
+    let getLocalStorage2 = localStorage.getItem("key2");
+    listArr = JSON.parse(getLocalStorage);
+    dateArr = JSON.parse(getLocalStorage2);
+    if(confirm("Do you want to mark this task as completed?")) {
+      let getLocalStorage3 = localStorage.getItem("key3");
+      let getLocalStorage4 = localStorage.getItem("key4");
+      if (getLocalStorage3 === null || getLocalStorage4 === null) {
+        deletedTasks = [];
+        deletedDates = [];
+      } else {
+        deletedTasks = JSON.parse(getLocalStorage3);
+        deletedDates = JSON.parse(getLocalStorage4);
+      }
+      deletedDates.push(date[index]);
+      for(let i=0;i<dateArr.length;i++) {
+        if(dateArr[i]===date[index]) {
+          dateArr.splice(i,1);
+        }
+      }
+      date.splice(index,1);
+      deletedTasks.push(taskList[index]);
+      for(let i=0;i<listArr.length;i++) {
+        if(listArr[i]===taskList[index]) {
+          listArr.splice(i,1);
+        }
+      }
+      taskList.splice(index,1);
+      localStorage.setItem("key",JSON.stringify(listArr));
+      localStorage.setItem("key2",JSON.stringify(dateArr));
+      localStorage.setItem("key3",JSON.stringify(deletedTasks));
+      localStorage.setItem("key4",JSON.stringify(deletedDates));
+    }
+    else if(confirm("Do you want to delete this task?")){
+
+      for(let i=0;i<dateArr.length;i++) {
+        if(dateArr[i]===date[index]) {
+          dateArr.splice(i,1);
+        }
+      }
+      date.splice(index,1);
+      for(let i=0;i<listArr.length;i++) {
+        if(listArr[i]===taskList[index]) {
+          listArr.splice(i,1);
+        }
+      }
+      taskList.splice(index,1);
+      localStorage.setItem("key",JSON.stringify(listArr));
+      localStorage.setItem("key2",JSON.stringify(dateArr));
+    }
+    showTasks();
+  };
+
+</script>
+
+</html>

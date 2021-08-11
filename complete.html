@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="style.css">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Kristi&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fredericka+the+Great&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet">
+  <!-- FontAwesome -->
+  <script src="https://kit.fontawesome.com/148bfd2b6a.js" crossorigin="anonymous"></script>
+  <!-- Icon -->
+  <link rel="icon" href="icons8-pen.png">
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+  <title>Tasqr</title>
+</head>
+
+<body>
+
+  <header>
+    <span class="tasqr">Tasqr</span> <span class="title2">: Todo List</span>
+    <ul class="nav nav-tabs justify-content-end nav-custom">
+      <li class="nav-item">
+        <a class="nav-link " href="index.html">All</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="complete.html">Completed</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="late.html">Late</a>
+      </li>
+    </ul>
+    <div class="header">
+      <h2>C O M P L E T E D &nbsp &nbsp T A S K S</h2>
+      <span class="input-box">
+
+      </span>
+      <div class="card">
+        <ul class="list-group list-group-flush" style="max-height: 294px;">
+
+        </ul>
+        <span class="tasks" style="padding-bottom: 19px;"> You have completed <span class="tasknum">0</span> tasks. </span>
+      </div>
+    </div>
+  </header>
+</body>
+
+<script type="text/javascript">
+  const todoList = document.querySelector(".list-group");
+  const taskNum = document.querySelector(".tasknum");
+  const editBtn = document.querySelector(".edit-btn");
+  const delBtn = document.querySelector(".delete-btn");
+  let count = 0;
+  showTasks();
+
+  function showTasks() {
+    let getLocalStorage3 = localStorage.getItem("key3");
+    let getLocalStorage4 = localStorage.getItem("key4");
+    if (getLocalStorage3 === null || getLocalStorage4 === null) {
+      deletedTasks = [];
+      deletedDates = [];
+    } else {
+      deletedTasks = JSON.parse(getLocalStorage3);
+      deletedDates = JSON.parse(getLocalStorage4);
+    }
+    if (!deletedTasks.length) {
+      document.querySelector(".tasks").innerHTML = `You haven't completed <span class="tasknum"> any </span> task yet!`
+    } else if (deletedTasks.length === 1) {
+      document.querySelector(".tasks").innerHTML = `You have completed <span class="tasknum"> 1 </span> task.`
+    } else {
+      taskNum.innerHTML = deletedTasks.length;
+    }
+    let newLi = '';
+    for (let i = deletedTasks.length - 1; i >= 0; i--) {
+      if (deletedTasks[i].length > 30) {
+        newLi += `<li class="list-group-item list-item"> ${deletedTasks[i]}
+                    <p>
+                      <span class="date"> ${deletedDates[i]} </span>
+                      <span class="deleteBtn" onclick = "deleteTask(${i})";> <i class="fas fa-trash"> </i> </span>
+                    </p>
+                  </li>`;
+      }
+      else {
+        newLi += `<li class="list-group-item list-item"> ${deletedTasks[i]}
+                    <span class="date"> ${deletedDates[i]} </span>
+                    <span class="deleteBtn" onclick = "deleteTask(${i})";> <i class="fas fa-trash"> </i> </span>
+                  </li>`;
+      }
+    }
+    todoList.innerHTML = newLi;
+  }
+
+  function deleteTask(index) {
+    if (confirm("Are you sure you want to delete this?")) {
+      let getLocalStorage3 = localStorage.getItem("key3");
+      let getLocalStorage4 = localStorage.getItem("key4");
+      if (getLocalStorage3 === null || getLocalStorage4 === null) {
+        deletedTasks = [];
+        deletedDates = [];
+      } else {
+        deletedTasks = JSON.parse(getLocalStorage3);
+        deletedDates2 = JSON.parse(getLocalStorage4);
+      }
+      deletedTasks.splice(index, 1);
+      deletedDates.splice(index, 1);
+      localStorage.setItem("key3", JSON.stringify(deletedTasks));
+      localStorage.setItem("key4", JSON.stringify(deletedDates));
+    }
+    showTasks();
+  }
+
+</script>
+
+</html>

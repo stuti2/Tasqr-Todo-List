@@ -1,25 +1,31 @@
-
 body {
   margin: 0;
   text-align: center;
 }
 
-header {
+header{
   background-image: linear-gradient(to left, rgba(137, 212, 207, 0.8), rgba(110, 69, 225, 0.8)), url('bg1.jpg');
   width: 100%;
   height: 425px;
   background-size: 100% 100%;
   color: white;
-  padding-top: 200px;
 }
 
-hr {
-  margin: 0;
+.header {
+  padding-top: 159px;
 }
+
+
 
 h2 {
   margin: auto;
 }
+
+p {
+  padding-bottom: 10px;
+}
+
+
 
 .btn {
   height: 2.5rem;
@@ -38,6 +44,16 @@ h2 {
   transition: all 0.3s ease;
 }
 
+li .edit-btn{
+  position: absolute;
+  right:-70px;
+  transition: all 0.3s ease;
+}
+
+li:hover .edit-btn{
+  right:70px;
+}
+
 li:hover .date{
   right:70px;
 }
@@ -48,7 +64,6 @@ li:hover .date{
   border-radius: 7px;
   border: none;
   padding-left: 20px;
-  /*  */
 }
 
 span .input1{
@@ -79,6 +94,17 @@ span .input1:hover{
   right: 0px;
 }
 
+.nav-custom .nav-link{
+  margin-right: 25px;
+  margin-top: 5px;
+  color: #fff;
+  padding-top: 5px;
+}
+
+ .nav-custom:hover .nav-link{
+  color: #fff;
+}
+
 .tasks {
   text-align: left;
   padding-top: 15px;
@@ -92,6 +118,24 @@ span .input1:hover{
   margin-right: 15px;
   float: right;
   height: 35px;
+}
+
+.tasqr{
+  font-family: 'Kristi', cursive;
+  font-size: 2.5rem;
+  padding-top: 0.7rem;
+  position: absolute;
+  display: inline-block;
+  left: 3rem;
+}
+
+.title2{
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1rem;
+  position: absolute;
+  display: inline-block;
+  padding-top: 1.9rem;
+  left: 7rem;
 }
 
 @media only screen and (max-width: 466px) {
